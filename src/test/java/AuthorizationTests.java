@@ -97,7 +97,7 @@ public class AuthorizationTests {
 
     @Test
     @DisplayName("Вход через кнопку в форме регистрации")
-    public void EnterFromRegPage() {
+    public void enterFromRegPage() {
         webDriver.get(ListOfUrls.REG_PAGE);
         regPage.clickEnterButton();
         authorizationPage.waitAuthorizationForm();
