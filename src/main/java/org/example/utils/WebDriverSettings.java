@@ -1,12 +1,9 @@
-package org.example.utils;
 
+package org.example.utils;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.io.File;
 
 public class WebDriverSettings {
 
@@ -17,26 +14,22 @@ public class WebDriverSettings {
          и открытия браузеров.
          */
         public static WebDriver createWebDriver(String browser) {
-            System.setProperty("webdriver.http.factory", "jdk-http-client");
-            ChromeDriverService service = new ChromeDriverService.Builder()
-                    .usingDriverExecutable(new File("/Users/yanafedorova/Downloads/QA-java-diplom-3/src/test/resources/chromedriver118"))
-                    .build();
-            ChromeOptions options = new ChromeOptions()
-                    .setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver118");
+            ChromeOptions options = new ChromeOptions();
+            options.setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+            options.addArguments("--remote-allow-origins=*");
             options.setPageLoadStrategy(PageLoadStrategy.EAGER);
             switch (browser) {
                 case "chrome":
-                    return new ChromeDriver(service, options);
+                    return new ChromeDriver(options);
 
                 case "yandex":
-                    System.setProperty("webdriver.http.factory", "jdk-http-client");
-                    ChromeDriverService secondService = new ChromeDriverService.Builder()
-                            .usingDriverExecutable(new File("/Users/yanafedorova/Downloads/QA-java-diplom-3/src/test/resources/chromedriver116"))
-                            .build();
-                    ChromeOptions secondOptions = new ChromeOptions()
-                            .setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex");
+                    System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver116");
+                    ChromeOptions secondOptions = new ChromeOptions();
+                    secondOptions.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex");
+                    secondOptions.addArguments("--remote-allow-origins=*");
                     secondOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-                    return new ChromeDriver(secondService, secondOptions.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex"));
+                    return new ChromeDriver(secondOptions.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex"));
 
                 default:
                     throw new RuntimeException("Incorrect browser name");
